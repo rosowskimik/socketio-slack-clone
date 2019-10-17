@@ -14,9 +14,17 @@ const io = socketio(expressServer);
 
 io.on('connection', socket => {
   const nsData = namespaces.map(ns => ({
+    id: ns.id,
     img: ns.img,
     endpoint: ns.endpoint
   }));
 
   socket.emit('namespaceList', nsData);
+});
+
+namespaces.forEach(namespace => {
+  io.of(namespace.endpoint).on('connection', nsSocket => {
+    const roomData = namespace.rooms;
+    nsSocket.emit('roomList', roomData);
+  });
 });

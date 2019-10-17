@@ -7,8 +7,9 @@ socket.on('namespaceList', data => {
   });
 
   document.querySelectorAll('.namespace').forEach(elem => {
-    elem.addEventListener('click', () =>
-      console.log(`${elem.dataset.endpoint}`)
-    );
+    elem.addEventListener('click', () => {
+      joinNs(elem.dataset.endpoint);
+    });
   });
+  joinNs(data[0].endpoint);
 });
